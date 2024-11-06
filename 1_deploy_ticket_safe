@@ -1,0 +1,17 @@
+const AuthenticityCertificateTickets = artifacts.require("AuthenticityCertificateTickets");
+const TicketSafe = artifacts.require("TicketSafe");
+
+module.exports = async function (deployer, network, accounts) {
+  const etherTokenAddress = ""; // Dirección del token Ether
+  const usdtTokenAddress = ""; // Dirección del token USDT
+  const poapAddress = ""; // Dirección del contrato IPOAP
+  const authenticityCertificateAddress = "0xc7a03672aaf6716d53768444a5d1b91faedfc6dd";
+
+  // Deploy the TicketSafe contract
+  await deployer.deploy(TicketSafe,  etherTokenAddress, usdtTokenAddress, poapAddress, authenticityCertificateAddress
+  );
+  const ticketSafe = await TicketSafe.deployed();
+
+  // Deploy the AuthenticityCertificateTickets contract
+  await deployer.deploy(AuthenticityCertificateTickets, ticketSafe.address);
+};
