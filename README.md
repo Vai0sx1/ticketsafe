@@ -82,4 +82,4 @@ MIT License
 
 ## Contributions:
 
-Contributions are welcome!  Please open an issue or submit a pull request.  This README provides a high-level overview; consult the source code for detailed functionality and usage.
+Contributions are welcome!  Please open an issue or submit a pull request. 
