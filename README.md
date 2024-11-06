@@ -1,74 +1,77 @@
 # TicketSafe: A Decentralized NFT Ticketing and Booking Marketplace
 
-TicketSafe is a secure and transparent blockchain-based solution for managing digital tickets for events, services, and experiences. Leveraging NFTs and smart contracts, it offers enhanced security, provenance, and flexibility for both event organizers and attendees.  This system integrates with POAPs (Proof of Attendance Protocol) and provides optional authenticity certificates, creating a robust and verifiable ticketing ecosystem.
+TicketSafe is a secure and transparent blockchain-based solution for managing digital tickets for events, services, and experiences.  Leveraging NFTs and smart contracts, it offers enhanced security, provenance, and flexibility for organizers and attendees.  The system integrates with POAPs (Proof of Attendance Protocol) and provides optional authenticity certificates, creating a robust and verifiable ticketing ecosystem.  A user-friendly frontend interface simplifies interaction with the smart contracts.
 
 
 ## Key Features:
 
-* **Decentralized Event Management:** Organizers can create and manage events directly on the blockchain, eliminating reliance on centralized platforms and reducing the risk of fraud or single points of failure.
-* **NFT-based Ticketing:** Tickets are represented as non-fungible tokens (NFTs), providing verifiable ownership and preventing counterfeiting.  This also enables secondary market trading (resale).
-* **ERC-20 Payment Integration:**  Supports ticket purchases using various ERC-20 tokens, offering flexibility and convenience for buyers.
-* **POAP Integration (Optional):**  Seamless integration with POAPs allows event attendees to receive verifiable proof of attendance, enhancing engagement and providing value beyond the initial ticket purchase.
-* **Authenticity Certificates (Optional):**  Adds an extra layer of security and trust by issuing authenticity certificates for each ticket, verifiable on the blockchain.
-* **Dynamic Pricing & Resale:**  Organizers can set minimum and maximum resale prices, controlling the secondary market and mitigating price manipulation.  A tiered commission structure incentivizes participation.
-* **Seating Management:**  Supports the allocation and management of seats for events with reserved seating, ensuring fair and transparent seat assignment.
-* **Flexible Seat Types:**  Organizers can define different seat types (e.g., General Admission, VIP) with varying prices and benefits.
-* **Comprehensive Filtering:**  Facilitates easy searching and filtering of available events based on various parameters.
-* **Revenue Management:**  Provides transparent revenue tracking and allows event organizers to withdraw their earnings securely.
-* **Pausable Functionality:**  Provides an emergency shutdown mechanism for the contract, allowing the owner to pause all operations in case of unforeseen issues.
+* **Decentralized Event Management:** Organizers create and manage events directly on the blockchain, eliminating reliance on centralized platforms and reducing fraud risks.
+* **NFT-based Ticketing:** Tickets are NFTs, providing verifiable ownership and preventing counterfeiting.  Secondary market trading (resale) is enabled.
+* **ERC-20 Payment Integration:** Supports ticket purchases using various ERC-20 tokens.
+* **POAP Integration (Optional):** Seamless integration with POAPs provides verifiable proof of attendance.
+* **Authenticity Certificates (Optional):** Adds an extra layer of security and trust through blockchain-verifiable certificates.
+* **Dynamic Pricing & Resale:** Organizers set minimum and maximum resale prices, controlling the secondary market.  A tiered commission structure incentivizes participation.
+* **Seating Management:** Supports allocation and management of seats for events with reserved seating.
+* **Flexible Seat Types:** Organizers define different seat types (e.g., General Admission, VIP) with varying prices.
+* **Comprehensive Filtering:** Facilitates easy searching and filtering of events.
+* **Revenue Management:** Provides transparent revenue tracking and secure withdrawal for organizers.
+* **Pausable Functionality:** Allows the owner to pause operations in case of unforeseen issues.
+* **Frontend Interface:**  A React-based frontend application simplifies user interaction with the smart contracts.
 
 
 ## Smart Contracts:
 
-The system comprises two core smart contracts:
-
-* **`TicketSafe.sol`:** The main contract responsible for creating, managing, and selling event tickets.
-* **`AuthenticityCertificateTickets.sol`:** A supporting contract for issuing and verifying authenticity certificates associated with tickets.
+* **`TicketSafe.sol`:** The main contract for creating, managing, and selling event tickets.
+* **`AuthenticityCertificateTickets.sol`:** A supporting contract for issuing and verifying authenticity certificates.
 
 
 ## Deployment and Usage:
 
-**1. Deployment:**
+**1. Smart Contract Deployment:**
 
-You will need a Solidity development environment (like Remix, Hardhat, or Truffle) and an Ethereum network (mainnet or a testnet).
+* **Prerequisites:** Solidity development environment (Remix, Hardhat, Truffle), Ethereum network (mainnet or testnet).
+* **Compilation:** Compile `TicketSafe.sol` and `AuthenticityCertificateTickets.sol`.
+* **Deployment:** Deploy `AuthenticityCertificateTickets.sol` first, then `TicketSafe.sol`, providing addresses for ERC-20 tokens, the POAP contract (if using), and the deployed `AuthenticityCertificateTickets` contract.
 
-* **Compilation:** Compile both `TicketSafe.sol` and `AuthenticityCertificateTickets.sol`.
-* **Deployment:** Deploy `AuthenticityCertificateTickets.sol` first and record its address. Then deploy `TicketSafe.sol`, providing the addresses of the desired ERC-20 tokens (e.g., WETH, USDC), the POAP contract (if using), and the deployed `AuthenticityCertificateTickets` contract address.
+
+**2. Frontend Deployment (`ticketsafe-frontend`):**
+
+The frontend is a React application. After installing dependencies (`npm install`), use `npm start` to run it locally.  Deployment involves building the application (`npm run build`) and deploying the static files to a web server.  The frontend utilizes various libraries including `@mui/material` for UI components, `@ethersproject/providers` for interacting with the blockchain, and `@web3-react/core` and related packages for wallet connection.
 
 
-**2. Interaction:**
+**3. Interaction:**
 
-After deployment, you can interact with the contracts using a web3 interface or a development tool.  Key functions include:
+Users interact primarily through the frontend, which handles communication with the smart contracts.  Key functions include:
 
-* **`createExperience(...)`:** Creates a new event or experience.
+* **`createExperience(...)`:** Creates a new event.
 * **`buyTicketERC20(...)`:** Purchases a ticket using ERC-20 tokens.
-* **`confirmAttendance(...)`:** Allows attendees to confirm their attendance (post-event).
-* **`withdraw(...)`:** Allows the event organizer to withdraw their earnings.
-* **`createSeatType(...)`:** Creates a new seat type (e.g., VIP).
-* **`filterExperiences(...)`:** Filters events based on various criteria.
+* **`confirmAttendance(...)`:** Confirms attendance (post-event).
+* **`withdraw(...)`:** Allows organizers to withdraw earnings.
+* **`createSeatType(...)`:** Creates a new seat type.
+* **`filterExperiences(...)`:** Filters events.
 
 
 **Example (Ticket Purchase):**
 
-To buy a ticket:
+1. Connect your wallet (e.g., Metamask) through the frontend.
+2. Approve the transfer of your ERC-20 tokens.
+3. Select the desired ticket and complete the purchase through the frontend's user interface.
 
-1. Approve the transfer of your ERC-20 tokens to the `TicketSafe` contract.
-2. Call the `buyTicketERC20` function, providing the `experienceId`, `ticketId`, `seatTypeId` (if applicable), `row`, `column` (if applicable), the ERC-20 token to use, and the price.
 
+**4. Considerations:**
 
-**3. Considerations:**
-
-* Ensure you have a sufficient balance of the chosen ERC-20 token.
-* Commission rates are configurable within the `TicketSafe` contract.
-* POAP integration requires a functional POAP contract.
-* IPFS (or similar decentralized storage) is recommended for storing off-chain data like event images or videos.
+* Ensure sufficient ERC-20 token balance.
+* Commission rates are configurable in `TicketSafe.sol`.
+* POAP integration needs a functional POAP contract.
+* IPFS (or similar) is recommended for off-chain data storage (images, videos).
 
 
 ## Requirements:
 
-* Solidity development environment (Remix, Hardhat, Truffle).
-* Ethereum network (mainnet or a testnet).
-* Account with sufficient Ether or ERC-20 tokens.
+* **Smart Contract:** Solidity development environment.
+* **Frontend:** Node.js, npm.
+* Ethereum network (mainnet or testnet).
+* Wallet (e.g., Metamask).
 * (Optional) A functional POAP contract.
 
 
@@ -76,17 +79,7 @@ To buy a ticket:
 
 MIT License
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
-
 
 ## Contributions:
 
-Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request on the GitHub repository.
-
-
-This README provides a high-level overview.  Consult the source code for detailed functionality and usage instructions.
-
-Las contribuciones son bienvenidas.  Si encuentras algún error o tienes alguna sugerencia de mejora, por favor, abre un issue o crea un pull request en el repositorio de GitHub.
-
-
-Este archivo README proporciona una descripción general del proyecto y las instrucciones básicas de uso.  Se recomienda revisar el código fuente para comprender a fondo la funcionalidad de cada función.
+Contributions are welcome!  Please open an issue or submit a pull request.  This README provides a high-level overview; consult the source code for detailed functionality and usage.
